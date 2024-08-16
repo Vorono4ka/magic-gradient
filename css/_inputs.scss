@@ -1,0 +1,43 @@
+input, textarea {
+    border-radius: 4px;
+    padding: 4px;
+}
+
+textarea {
+    border: 1px solid lightgray;
+}
+
+input[type=color] {
+    min-height: 40px;
+}
+
+.input-group {
+    border-radius: 4px;
+
+    > input {
+        width: 100%;
+    }
+}
+
+.input-group:has(label) {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.input-group:has(input+button) {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid lightgray;
+
+    > :not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    
+    > :not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}

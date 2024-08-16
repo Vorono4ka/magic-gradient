@@ -1,0 +1,200 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+:focus,
+:active {
+  outline: none;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+nav, footer, header, aside {
+  display: block;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  line-height: normal;
+  font-weight: 300;
+  font-size: 1rem;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+input, button, textarea {
+  font-family: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1.1;
+}
+
+a,
+a:hover,
+a:active,
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+.toast {
+  position: absolute;
+  background-color: white;
+}
+
+.toast-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.toast_hidden {
+  visibility: hidden;
+}
+
+input, textarea {
+  border-radius: 4px;
+  padding: 4px;
+}
+
+textarea {
+  border: 1px solid lightgray;
+}
+
+input[type=color] {
+  min-height: 40px;
+}
+
+.input-group {
+  border-radius: 4px;
+}
+.input-group > input {
+  width: 100%;
+}
+
+.input-group:has(label) {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input-group:has(input + button) {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid lightgray;
+}
+.input-group:has(input + button) > :not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.input-group:has(input + button) > :not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+button {
+  padding: 4px 10px 4px 10px;
+  border-radius: 4px;
+}
+
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-wrap: wrap;
+}
+
+header, footer {
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+main {
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+  height: 100%;
+}
+
+#colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+#colors > * {
+  width: calc(33.3333333333% - 4px);
+}
+@media screen and (max-width: 800px) {
+  #colors > * {
+    width: calc(50% - 2px);
+  }
+}
+@media screen and (max-width: 600px) {
+  #colors > * {
+    width: 100%;
+  }
+}
+
+#preview {
+  display: flex;
+  flex-wrap: wrap;
+}/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,55 @@
+@import "nullstyles";
+@import "toasts";
+@import "inputs";
+@import "buttons";
+
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-wrap: wrap;
+}
+
+header, footer {
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+main {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+
+    height: 100%;
+}
+
+#colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+
+    > * {
+        width: calc(100% / 3 - 4px / 2 * 2);
+    }
+    @media screen and (max-width: 800px) {
+        > * {
+            width: calc(100% / 2 - 4px / 2);
+        }
+    }
+    @media screen and (max-width: 600px) {
+        > * {
+            width: 100%;
+        }
+    }
+}
+
+#preview {
+    display: flex;
+    flex-wrap: wrap;
+}

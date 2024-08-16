@@ -2,32 +2,22 @@ Number.prototype.hex = function () {
     return this.toString(16).padStart(2, '0');
 };
 
+function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+}
+
 class Frame {
     /**
-     * @param {number} r
-     * @param {number} g
-     * @param {number} b
-     * @param {boolean} checkBorders
+     * @param {number} red
+     * @param {number} green
+     * @param {number} blue
+     * @param {boolean} clampColors
      */
-    constructor(r=0, g=0, b=0, checkBorders=true) {
-        if (checkBorders) {
-            if (r > 255) {
-                r = 255;
-            } else if (r < 0) {
-                r = 0;
-            }
-
-            if (g > 255) {
-                g = 255;
-            } else if (g < 0) {
-                g = 0;
-            }
-
-            if (b > 255) {
-                b = 255;
-            } else if (b < 0) {
-                b = 0;
-            }
+    constructor(r=0, g=0, b=0, clampColors=true) {
+        if (clampColors) {
+            r = clamp(r, 0, 255);
+            g = clamp(g, 0, 255);
+            b = clamp(b, 0, 255);
         }
 
         this.r = r;
@@ -177,87 +167,4 @@ class Gradient {
 
         return result;
     }
-}
-
-let onRemoveColor = function (event) {
-    let colorGroup = event.target.parentElement;
-
-    if (document.getElementById('colors').childElementCount > 1)
-        colorGroup.remove();
-    else {
-        let toast = new bootstrap.Toast(document.querySelector('#error-toast'));
-        toast.show();
-    }
-
-    onChangeSettings();
-};
-
-function onChangeSettings() {
-    const gradient = new Gradient();
-
-    const text = document.getElementById('inputMessage').value;
-
-    for (const colorGroup of document.getElementById('colors').children) {
-        let colorInput = colorGroup.getElementsByTagName('input')[0];
-        gradient.createFrame(colorInput.value.slice(1));
-    }
-    document.getElementById('result').value = gradient.apply(text);
-    document.getElementById('preview').innerHTML = gradient.apply(text, 1);
-}
-
-function addColorInput() {
-    const color = document.createElement('div');
-    color.classList.add('input-group');
-
-    const colorInput = document.createElement('input');
-    colorInput.setAttribute('aria-describedby', 'remove-button');
-    colorInput.classList.add('form-control-color');
-    colorInput.classList.add('form-control');
-    colorInput.style.maxWidth = '100%';
-    colorInput.type = 'color';
-
-    const closeBtn = document.createElement('button');
-    closeBtn.classList.add('btn-outline-danger');
-    closeBtn.classList.add('btn');
-	closeBtn.innerHTML = '❌';
-
-    colorInput.onchange = onChangeSettings;
-    closeBtn.onclick = onRemoveColor;
-
-    color.appendChild(colorInput);
-    color.appendChild(closeBtn);
-
-    document.getElementById('colors').appendChild(color);
-    onChangeSettings();
-}
-
-function init() {
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[tooltip]'));
-    tooltipTriggerList.map(function (element) {
-        let tooltip = new bootstrap.Tooltip(element);
-
-        element.setAttribute('data-bs-original-title', element.getAttribute('tooltip'));
-        element.addEventListener('mouseout', function (event) {
-            let element = event.target;
-            element.setAttribute('data-bs-original-title', element.getAttribute('tooltip'));
-        });
-
-        return tooltip;
-    });
-
-    document.querySelector('#copy-button').addEventListener('click', function (event) {
-        let inputToCopy = document.querySelector('#result');
-
-        inputToCopy.select();
-        inputToCopy.setSelectionRange(0, 99999);
-
-        document.execCommand("copy");
-
-        let button = event.target;
-        button.setAttribute('data-bs-original-title', 'Copied!');
-        let tooltip = bootstrap.Tooltip.getInstance(button);
-        tooltip.show();
-    })
-
-    addColorInput();
 }

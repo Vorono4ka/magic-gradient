@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Magic Gradient</title>
@@ -8,52 +8,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 	
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/toasts.js"></script>
     <script src="js/gradient.js"></script>
+    <script src="js/main.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/gradient-styles.css">
-	<link href="../css/styles.css" rel="stylesheet">
+	<link href="css/styles.css" rel="stylesheet">
 </head>
-<body class="h-100">
-    <header class="mb-4">
-        <h1 class="text-center p-3 bg-dark text-light">Magic Gradient</h1>
+<body>
+    <header>
+        <h1>Magic Gradient</h1>
     </header>
-    <div class="container mt-3 h-100">
-        <label for="inputMessage" class="form-label">Введите текст для окраски:</label>
-        <textarea placeholder="Введите текст..." onkeyup="onChangeSettings()" class="form-control mb-2" id="inputMessage" rows="10"></textarea>
-        <div class="input-group mb-2">
-            <input placeholder="Результат."
-                   id="result" class="form-control"
-                   readonly />
-            <button class="btn btn-outline-secondary" id="copy-button" type="button" tooltip="Копировать в буфер">Копировать</button>
-        </div>
-        <div class="mb-2">
-            Предпросмотр:
-            <span id="preview"></span>
-        </div>
-
-        <div id="colors" class="mb-2"></div>
-        <button onclick="addColorInput()" class="btn btn-primary">Добавить цвет</button>
-
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
-            <div id="error-toast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-body">
-                    Вы не можете удалить единственный цвет!
-                    <div class="mt-2 pt-2 border-top">
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="toast">Хорошо</button>
+    <main>
+        <div class="container">
+            <div class="input-group">
+                <label for="inputMessage">Введите текст для окраски:</label>
+                <textarea placeholder="Введите текст..." onkeyup="onChangeSettings()" id="inputMessage" rows="10"></textarea>
+            </div>
+            <div class="input-group">
+                <input placeholder="Результат." id="result" readonly />
+                <button id="copy-button" type="button" tooltip="Копировать в буфер">Копировать</button>
+            </div>
+            <div>
+                Предпросмотр:
+                <span id="preview"></span>
+            </div>
+    
+            <button onclick="addColorInput()">Добавить цвет</button>
+            <div id="colors"></div>
+    
+            <div>
+                <div id="error-toast" class="toast toast_hidden">
+                    <div class="toast-body">
+                        Вы не можете удалить единственный цвет!
+                        <button type="button" toast-close-button>Хорошо</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-	<footer class="bd-footer mt-auto p-3 p-md-5 mt-3 bg-dark text-light text-center text-sm-start">
-		<div id="footer-content" class="container d-flex align-items-center">
-			<p class="mb-0 w-100">Сделано <a href="https://t.me/magics_servers">Magic Team</a> в 2021 году.</p>
-			<div id="download-buttons" class="d-flex justify-content-end w-100 gap-1 mobile-hidden">
-				<a class="btn btn-primary" href="https://files.magic-servers.xyz/retrobrawl.apk">Скачать Retro Brawl</a>
-			</div>
+	<footer>
+		<div id="footer-content">
+			<p>Сделано <a href="https://github.com/Vorono4ka">Vorono4ka</a> в 2021 году.</p>
 		</div>
 	</footer>
 	

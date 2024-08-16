@@ -1,0 +1,17 @@
+.toast {
+    position: absolute;
+    background-color: white;
+}
+
+.toast-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.toast_hidden {
+    visibility: hidden;
+}
