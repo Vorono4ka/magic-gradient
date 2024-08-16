@@ -108,41 +108,55 @@ class Gradient {
 
         this.frames.push(new Frame(r, g, b));
     }
+    
+    getTransitionCount() {
+        return this.frames.length - 1;
+    }
+    
+    /**
+     * @param {number} length
+     */
+    getTransitionFrameCount(length) {
+        return Math.floor(length/this.getTransitionCount());
+    }
 
     /**
      * @param {number} length
      */
     smooth(length) {
-        let framesCount = this.frames.length;
+        if (length <= this.frames.length) return this.frames.slice(0, length);
 
-        if (framesCount >= length) return this.frames.slice(0, length);
-
-        if (framesCount > 1) {
-            let smoothed = [];
-
-            let transitionsCount = framesCount;
-            let framesInTransition = Math.ceil(length/(transitionsCount-1));
-            for (let transitionIndex = 0; transitionIndex < transitionsCount; transitionIndex++) {
-                let frameSlice = this.frames.slice(transitionIndex, transitionIndex + 2);
-                let minFrame = Frame.min(frameSlice);
-                let maxFrame = Frame.max(frameSlice);
-
-                let difference = maxFrame.difference(minFrame);
-
-                let frameToAdd = minFrame;
-                for (let x = 0; x < framesInTransition; x++) {
-                    let transitionLevel = x / (framesInTransition - 1) || 0;
-                    if (frameSlice.indexOf(minFrame) === 1) {
-                        frameToAdd = maxFrame;
-                        transitionLevel *= -1;
-                    }
-                    smoothed.push(frameToAdd.add(difference.mul(transitionLevel)));
-                }
-            }
-            return smoothed;
+        if (this.frames.length == 1) {
+            return new Array(length).fill(this.frames[0]);
         }
 
-        return this.frames;
+        const smoothed = [];
+
+        const transitionCount = this.getTransitionCount();
+        let transitionFrameCount = this.getTransitionFrameCount(length);
+        for (let transitionIndex = 0; transitionIndex < transitionCount; transitionIndex++) {
+            const frameSlice = this.frames.slice(transitionIndex, transitionIndex + 2);
+            const minFrame = Frame.min(frameSlice);
+            const maxFrame = Frame.max(frameSlice);
+
+            const difference = maxFrame.difference(minFrame);
+
+            const isFirstLess = frameSlice.indexOf(minFrame) === 0;
+            const frameToAdd = isFirstLess ? minFrame : maxFrame;
+            const transitionLevelSignum = isFirstLess ? 1 : -1;
+
+            if (transitionIndex === transitionCount - 1) {
+                transitionFrameCount = transitionFrameCount + length % transitionCount;
+            }
+
+            for (let transitionFrame = 0; transitionFrame < transitionFrameCount; transitionFrame++) {
+                const transitionLevel = transitionLevelSignum * (transitionFrame + 1) / transitionFrameCount;
+                
+                smoothed.push(frameToAdd.add(difference.mul(transitionLevel)));
+            }
+        }
+
+        return smoothed;
     }
 
     /**
@@ -173,22 +187,25 @@ class Gradient {
         }
 
         const frames = this.smooth(text.length);
+
         for (let charIndex = 0; charIndex < text.length; charIndex++) {
-            let frame = frames[charIndex % frames.length];
-            colorPhrase += text[charIndex];
-            let frameColor = frame.toString();
+            const frame = frames[charIndex];
+            const frameColor = frame.toString();
+
             if (color == null) {
                 color = frameColor;
             }
 
             if (frameColor !== color) {
+                result += formatter.format(color, colorPhrase);
                 color = frameColor;
-                result += formatter.format(frameColor, colorPhrase);
                 colorPhrase = "";
             }
+
+            colorPhrase += text[charIndex];
         }
 
-        if (colorPhrase !== null){
+        if (colorPhrase !== ""){
             result += formatter.format(color, colorPhrase);
         }
 
