@@ -147,23 +147,52 @@ class Gradient {
 
     /**
      * @param {string} text
-     * @param {number} style
+     * @param {number} formattingStyle
      */
-    apply(text, style = 0) {
-        if (text.length === 0) return '';
-        let result = '';
+    apply(text, formattingStyle = 0) {
+        if (text.length === 0) return "";
+
+        let result = "";
+        let colorPhrase = "";
+        let color = null;
+
+        const formatter = {
+            format: function (color, colorPhrase) {
+                if (formattingStyle === 0)
+                    return `<c${color}>${colorPhrase}`;
+                else if (formattingStyle === 1)
+                    return `<font color="#${color}">${colorPhrase}</font>`;
+
+                return "NOT SUPPORTED"
+            },
+            flush: function () {
+                if (formattingStyle === 0)
+                    return '</c>';
+                return ''
+            }
+        }
 
         const frames = this.smooth(text.length);
         for (let charIndex = 0; charIndex < text.length; charIndex++) {
             let frame = frames[charIndex % frames.length];
-            if (style === 0)
-                result += `<c${frame.toString()}>${text[charIndex]}`;
-            else if (style === 1)
-                result += `<font color="#${frame.toString()}">${text[charIndex]}</font>`;
+            colorPhrase += text[charIndex];
+            let frameColor = frame.toString();
+            if (color == null) {
+                color = frameColor;
+            }
 
+            if (frameColor !== color) {
+                color = frameColor;
+                result += formatter.format(frameColor, colorPhrase);
+                colorPhrase = "";
+            }
         }
-        if (style === 0)
-            result += '</c>';
+
+        if (colorPhrase !== null){
+            result += formatter.format(color, colorPhrase);
+        }
+
+        result += formatter.flush();
 
         return result;
     }
