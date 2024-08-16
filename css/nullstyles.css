@@ -38,6 +38,7 @@ html, body {
 
 input, button, textarea {
     font-family: inherit;
+    background-color: white;
 }
 
 textarea {

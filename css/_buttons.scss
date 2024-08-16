@@ -1,4 +1,14 @@
 button {
     padding: 4px 10px 4px 10px;
     border-radius: $border-radius;
+
+    background-color: $button-color;
+}
+
+button:hover {
+    background-color: $button-hovered-color;
+}
+
+button:active {
+    background-color: $button-active-color;
 }
