@@ -1,6 +1,6 @@
 input, textarea {
-    border-radius: 4px;
-    padding: 4px;
+    border-radius: $border-radius;
+    padding: $border-radius;
 }
 
 textarea {
@@ -9,10 +9,21 @@ textarea {
 
 input[type=color] {
     min-height: 40px;
+    cursor: pointer;
+}
+
+::-webkit-color-swatch {
+    border: none;
+    border-radius: $border-radius;
+    padding: 0;
+}
+
+::-webkit-color-swatch-wrapper {
+    padding: 0;
 }
 
 .input-group {
-    border-radius: 4px;
+    border-radius: $border-radius;
 
     > input {
         width: 100%;
@@ -23,7 +34,7 @@ input[type=color] {
     display: flex;
     flex-direction: column;
 
-    gap: 4px;
+    gap: $gap;
 }
 
 .input-group:has(input+button) {
